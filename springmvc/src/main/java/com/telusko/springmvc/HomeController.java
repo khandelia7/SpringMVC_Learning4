@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.telusko.dao.AlienDao;
 import com.telusko.model.Alien;
@@ -45,11 +46,24 @@ public class HomeController {
 // 		return "showAlien";
 // 	}
  	
- 	//GET from database
- 	@GetMapping("getAlien")
- 	public String getAlien(Model m) {
+ 	//GET all Alien from database
+ 	@GetMapping("getAliens")
+ 	public String getAliens(Model m) {
  		m.addAttribute("result",alienDao.getAliens());
  		return "showAlien";
  	}
  	
+ 	// Add Alien in database
+ 	@RequestMapping("addAlien")
+ 	public String addAliens(@ModelAttribute("result") Alien a) {
+ 		alienDao.addAlien(a);
+ 		return "showAlien";
+ 	}
+ 	
+ 	//GET one Alien from database
+ 	@GetMapping("getAlien")
+ 	public String getAlien(@RequestParam int aid, Model m) {
+ 		m.addAttribute("result",alienDao.getAlien(aid));
+ 		return "showAlien";
+ 	}
 }
